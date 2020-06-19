@@ -3,15 +3,27 @@ package main
 import (
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
+	"log"
 )
 
-func main() {
-	if err := ebiten.Run(update, 240, 160, 2, "Matze!"); err != nil {
-		panic(err)
-	}
+type Game struct{}
+
+func (g *Game) Update(screen *ebiten.Image) error {
+	return nil
 }
 
-func update(screen *ebiten.Image) error {
+func (g *Game) Draw(screen *ebiten.Image) {
 	ebitenutil.DebugPrint(screen, "Matze!")
-	return nil
+}
+
+func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
+	return 240, 160
+}
+
+func main() {
+	ebiten.SetWindowSize(480, 320)
+	ebiten.SetWindowTitle("Matze!")
+	if err := ebiten.RunGame(&Game{}); err != nil {
+		log.Fatal(err)
+	}
 }
